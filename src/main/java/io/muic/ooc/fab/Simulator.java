@@ -9,7 +9,6 @@ import java.util.Random;
 import java.util.List;
 import java.util.ArrayList;
 import java.util.Iterator;
-import java.awt.Color;
 
 public class Simulator {
 
@@ -24,8 +23,7 @@ public class Simulator {
     private static final double RABBIT_CREATION_PROBABILITY = 0.08;
 
     // Lists of animals in the field.
-    private List<Animal> rabbits;
-    private List<Animal> foxes;
+    private List<Animal> animals;
     // The current state of the field.
     private Field field;
     // The current step of the simulation.
@@ -56,14 +54,15 @@ public class Simulator {
             width = DEFAULT_WIDTH;
         }
 
-        rabbits = new ArrayList<>();
-        foxes = new ArrayList<>();
+        animals = new ArrayList<>();
         field = new Field(depth, width);
 
         // Create a view of the state of each location in the field.
         view = new SimulatorView(depth, width);
-        view.setColor(Rabbit.class, Color.ORANGE);
-        view.setColor(Fox.class, Color.BLUE);
+        for (AnimalType animalType: AnimalType.values()) {
+            view.setColor(animalType.getAimalClass(), animalType.getColor());
+
+        }
         view.addWindowListener(new WindowListener() {
             @Override
             public void windowOpened(WindowEvent e) {
@@ -125,45 +124,32 @@ public class Simulator {
      * the whole field updating the state of each fox and rabbit.
      */
     public void simulateOneStep() {
+
         step++;
-
-        // Provide space for newborn rabbits.
-        List<Rabbit> newRabbits = new ArrayList<>();
-        // Let all rabbits act.
-        for (Iterator<Animal> it = rabbits.iterator(); it.hasNext();) {
-            Rabbit rabbit = (Rabbit) it.next();
-            rabbit.run(newRabbits);
-            if (!rabbit.isAlive()) {
-                it.remove();
-            }
-        }
-
-        // Provide space for newborn foxes.
-        List<Fox> newFoxes = new ArrayList<>();
-        // Let all foxes act.
-        for (Iterator<Animal> it = foxes.iterator(); it.hasNext();) {
-            Fox fox = (Fox) it.next();
-            fox.hunt(newFoxes);
-            if (!fox.isAlive()) {
+        // Provide space for newborn animals.
+        List<Animal> newAnimals = new ArrayList<>();
+        // Let all animals act.
+        for (Iterator<Animal> it = animals.iterator(); it.hasNext();) {
+            Animal animal = it.next();
+            animal.act(newAnimals);
+            if (!animal.isAlive()) {
                 it.remove();
             }
         }
 
         // Add the newly born foxes and rabbits to the main lists.
-        rabbits.addAll(newRabbits);
-        foxes.addAll(newFoxes);
+        animals.addAll(newAnimals);
+        view.showStatus(step, field);    }
 
-        view.showStatus(step, field);
-    }
 
     /**
      * Reset the simulation to a starting position.
      */
     public void reset() {
         step = 0;
-        rabbits.clear();
-        foxes.clear();
-        populate();
+        animals.clear();
+//        populate();
+        new Populator().populate(field, animals);
 
         // Show the starting state in the view.
         view.showStatus(step, field);
@@ -172,24 +158,28 @@ public class Simulator {
     /**
      * Randomly populate the field with foxes and rabbits.
      */
-    private void populate() {
-        
-        field.clear();
-        for (int row = 0; row < field.getDepth(); row++) {
-            for (int col = 0; col < field.getWidth(); col++) {
-                if (RANDOM.nextDouble() <= FOX_CREATION_PROBABILITY) {
-                    Location location = new Location(row, col);
-                    Animal animal = AnimalFatory.createAnimal(AnimalType.FOX,true, field, location);
-                    foxes.add(animal);
-                } else if (RANDOM.nextDouble() <= RABBIT_CREATION_PROBABILITY) {
-                    Location location = new Location(row, col);
-                    Animal animal = AnimalFatory.createAnimal(AnimalType.RABBIT,true, field, location);
-                    rabbits.add(animal);
-                }
-                // else leave the location empty.
-            }
-        }
-    }
+//    private void populate() {
+//
+//        field.clear();
+//        for (int row = 0; row < field.getDepth(); row++) {
+//            for (int col = 0; col < field.getWidth(); col++) {
+//                double random =  RANDOM.nextDouble();
+//                double cumulativeProb = 0;
+//                for (AnimalType animalType : AnimalType.values()) {
+//                    cumulativeProb += animalType.getProb();
+//                    if (random <= cumulativeProb){
+//                        Location location = new Location(row, col);
+//                        Animal animal = AnimalFatory.createAnimal(animalType, true, field, location);
+//                        animals.add(animal);
+////                        System.out.println(animalType.toString());
+////                        System.out.println(location.toString());
+//                        break;
+//                    }
+//                }
+//            }
+//        }
+//        System.out.println("done populate");
+//    }
 
     /**
      * Pause for a given time.

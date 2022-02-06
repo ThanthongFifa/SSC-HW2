@@ -1,5 +1,6 @@
 package io.muic.ooc.fab;
 
+import java.util.List;
 import java.util.Random;
 
 public abstract class Animal {
@@ -118,5 +119,7 @@ public abstract class Animal {
 
     protected abstract double getBreedingProb();
 
+    public abstract void act(List<Animal> newAnimals);
 
-}
+
+    }

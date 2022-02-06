@@ -38,7 +38,8 @@ public class Rabbit extends Animal {
      *
      * @param newRabbits A list to return newly born rabbits.
      */
-    public void run(List<Rabbit> newRabbits) {
+    @Override
+    public void act(List<Animal> newRabbits) {
         incrementAge();
         if (isAlive()) {
             giveBirth(newRabbits);
@@ -59,7 +60,7 @@ public class Rabbit extends Animal {
      *
      * @param newRabbits A list to return newly born rabbits.
      */
-    private void giveBirth(List<Rabbit> newRabbits) {
+    private void giveBirth(List<Animal> newRabbits) {
         // New rabbits are born into adjacent locations.
         // Get a list of adjacent free locations.
         List<Location> free = getField().getFreeAdjacentLocations(getLocation());
