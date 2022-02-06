@@ -148,8 +148,7 @@ public class Simulator {
     public void reset() {
         step = 0;
         animals.clear();
-//        populate();
-        new Populator().populate(field, animals);
+        populate();
 
         // Show the starting state in the view.
         view.showStatus(step, field);
@@ -158,28 +157,28 @@ public class Simulator {
     /**
      * Randomly populate the field with foxes and rabbits.
      */
-//    private void populate() {
-//
-//        field.clear();
-//        for (int row = 0; row < field.getDepth(); row++) {
-//            for (int col = 0; col < field.getWidth(); col++) {
-//                double random =  RANDOM.nextDouble();
-//                double cumulativeProb = 0;
-//                for (AnimalType animalType : AnimalType.values()) {
-//                    cumulativeProb += animalType.getProb();
-//                    if (random <= cumulativeProb){
-//                        Location location = new Location(row, col);
-//                        Animal animal = AnimalFatory.createAnimal(animalType, true, field, location);
-//                        animals.add(animal);
-////                        System.out.println(animalType.toString());
-////                        System.out.println(location.toString());
-//                        break;
-//                    }
-//                }
-//            }
-//        }
-//        System.out.println("done populate");
-//    }
+    private void populate() {
+
+        field.clear();
+        for (int row = 0; row < field.getDepth(); row++) {
+            for (int col = 0; col < field.getWidth(); col++) {
+                double random =  RANDOM.nextDouble();
+                double cumulativeProb = 0;
+                for (AnimalType animalType : AnimalType.values()) {
+                    cumulativeProb += animalType.getProb();
+                    if (random <= cumulativeProb){
+                        Location location = new Location(row, col);
+                        Animal animal = AnimalFatory.createAnimal(animalType, true, field, location);
+                        animals.add(animal);
+//                        System.out.println(animalType.toString());
+//                        System.out.println(location.toString());
+                        break;
+                    }
+                }
+            }
+        }
+        System.out.println("done populate");
+    }
 
     /**
      * Pause for a given time.
