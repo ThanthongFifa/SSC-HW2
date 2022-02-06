@@ -7,6 +7,8 @@ public abstract class Animal {
 
     protected abstract int getMaxAge();{}
 
+    protected abstract int getBreedingAge();{}
+
     public void setAge(int age) {
         this.age = age;
     }
@@ -23,5 +25,14 @@ public abstract class Animal {
         if (age > getMaxAge()) {
             setDead();
         }
+    }
+
+    /**
+     * A animal can breed if it has reached the breeding age.
+     *
+     * @return true if the rabbit can breed, false otherwise.
+     */
+    protected boolean canBreed() {
+        return getAge() >= getBreedingAge();
     }
 }
