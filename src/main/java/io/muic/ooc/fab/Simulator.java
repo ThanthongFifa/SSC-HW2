@@ -23,7 +23,7 @@ public class Simulator {
     private static final double RABBIT_CREATION_PROBABILITY = 0.08;
 
     // Lists of animals in the field.
-    private List<Animal> animals;
+    private List<Actor> animals;
     // The current state of the field.
     private Field field;
     // The current step of the simulation.
@@ -54,7 +54,7 @@ public class Simulator {
             width = DEFAULT_WIDTH;
         }
 
-        animals = new ArrayList<>();
+        animals = new ArrayList<Actor>();
         field = new Field(depth, width);
 
         // Create a view of the state of each location in the field.
@@ -127,18 +127,18 @@ public class Simulator {
 
         step++;
         // Provide space for newborn animals.
-        List<Animal> newAnimals = new ArrayList<>();
+        List<Actor> newActors = new ArrayList<>();
         // Let all animals act.
-        for (Iterator<Animal> it = animals.iterator(); it.hasNext();) {
-            Animal animal = it.next();
-            animal.act(newAnimals);
+        for (Iterator<Actor> it = animals.iterator(); it.hasNext();) {
+            Actor animal = it.next();
+            animal.act(newActors);
             if (!animal.isAlive()) {
                 it.remove();
             }
         }
 
         // Add the newly born foxes and rabbits to the main lists.
-        animals.addAll(newAnimals);
+        animals.addAll(newActors);
         view.showStatus(step, field);    }
 
 
@@ -177,7 +177,7 @@ public class Simulator {
                 }
             }
         }
-        System.out.println("done populate");
+        //System.out.println("done populate");
     }
 
     /**

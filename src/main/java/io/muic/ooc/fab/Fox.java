@@ -45,7 +45,7 @@ public class Fox extends Animal {
      * @param newFoxes A list to return newly born foxes.
      */
     @Override
-    public void act(List<Animal> newFoxes) {
+    public void act(List<Actor> newFoxes) {
         incrementAge();
         incrementHunger();
         if (isAlive()) {
@@ -106,7 +106,7 @@ public class Fox extends Animal {
      *
      * @param newFoxes A list to return newly born foxes.
      */
-    private void giveBirth(List<Animal> newFoxes) {
+    private void giveBirth(List<Actor> newFoxes) {
         // New foxes are born into adjacent locations.
         // Get a list of adjacent free locations.
         List<Location> free = getField().getFreeAdjacentLocations(getLocation());
