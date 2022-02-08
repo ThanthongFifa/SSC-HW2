@@ -9,20 +9,14 @@ public abstract class Animal extends Actor {
 
     private int age = 0;
 
-    protected abstract int getMaxAge();{}
+
 
     protected abstract int getBreedingAge();{}
 
     public Animal(boolean randomAge, Field field, Location location) {
-        super(field, location);
-        if (randomAge) {
-            setAge(RANDOM.nextInt(getMaxAge()));
-        }
+        super(randomAge, field, location);
     }
 
-    public void setAge(int age) {
-        this.age = age;
-    }
 
     public int getAge() {
         return age;

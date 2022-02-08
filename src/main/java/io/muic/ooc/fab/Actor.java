@@ -1,6 +1,7 @@
 package io.muic.ooc.fab;
 
 import java.util.List;
+import java.util.Random;
 
 public abstract class Actor {
 
@@ -13,10 +14,23 @@ public abstract class Actor {
     // The field occupied.
     private Field field;
 
-    public Actor(Field field, Location location) {
+    private int age = 0;
+
+    private static final Random RANDOM = new Random();
+
+    public Actor(boolean randomAge ,Field field, Location location) {
         setField(field);
         setLocation(location);
+        if (randomAge) {
+            setAge(RANDOM.nextInt(getMaxAge()));
+        }
     }
+
+    public void setAge(int age) {
+        this.age = age;
+    }
+
+    protected abstract int getMaxAge();{}
 
     public Field getField() {
         return field;
