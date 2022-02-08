@@ -88,6 +88,7 @@ public class Fox extends Animal {
         while (it.hasNext()) {
             Location where = it.next();
             Object animal = getField().getObjectAt(where);
+
             if (animal instanceof Rabbit) {
                 Rabbit rabbit = (Rabbit) animal;
                 if (rabbit.isAlive()) {
@@ -96,6 +97,7 @@ public class Fox extends Animal {
                     return where;
                 }
             }
+
         }
         return null;
     }
