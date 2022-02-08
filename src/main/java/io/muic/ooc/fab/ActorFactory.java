@@ -2,11 +2,11 @@ package io.muic.ooc.fab;
 
 import java.lang.reflect.InvocationTargetException;
 
-public class AnimalFatory {
+public class ActorFactory {
 
-    public static Animal createAnimal(AnimalType animalType,boolean randomAge, Field field, Location location){
+    public static Actor createActor(ActorType actorType, boolean randomAge, Field field, Location location){
         try {
-            return animalType.getAimalClass().getDeclaredConstructor(boolean.class, Field.class, Location.class).newInstance(randomAge, field, location);
+            return actorType.getActorClass().getDeclaredConstructor(boolean.class, Field.class, Location.class).newInstance(randomAge, field, location);
         } catch (InstantiationException e) {
             e.printStackTrace();
         } catch (IllegalAccessException e) {
@@ -16,6 +16,6 @@ public class AnimalFatory {
         } catch (NoSuchMethodException e) {
             e.printStackTrace();
         }
-        throw new RuntimeException("Unknow animal type");
+        throw new RuntimeException("Unknow actor type");
     }
 }

@@ -23,7 +23,7 @@ public class Simulator {
     private static final double RABBIT_CREATION_PROBABILITY = 0.08;
 
     // Lists of animals in the field.
-    private List<Actor> animals;
+    private List<Actor> Actors;
     // The current state of the field.
     private Field field;
     // The current step of the simulation.
@@ -54,13 +54,13 @@ public class Simulator {
             width = DEFAULT_WIDTH;
         }
 
-        animals = new ArrayList<Actor>();
+        Actors = new ArrayList<Actor>();
         field = new Field(depth, width);
 
         // Create a view of the state of each location in the field.
         view = new SimulatorView(depth, width);
-        for (AnimalType animalType: AnimalType.values()) {
-            view.setColor(animalType.getAimalClass(), animalType.getColor());
+        for (ActorType actorType : ActorType.values()) {
+            view.setColor(actorType.getActorClass(), actorType.getColor());
 
         }
         view.addWindowListener(new WindowListener() {
@@ -129,7 +129,7 @@ public class Simulator {
         // Provide space for newborn animals.
         List<Actor> newActors = new ArrayList<>();
         // Let all animals act.
-        for (Iterator<Actor> it = animals.iterator(); it.hasNext();) {
+        for (Iterator<Actor> it = Actors.iterator(); it.hasNext();) {
             Actor animal = it.next();
             animal.act(newActors);
             if (!animal.isAlive()) {
@@ -138,7 +138,7 @@ public class Simulator {
         }
 
         // Add the newly born foxes and rabbits to the main lists.
-        animals.addAll(newActors);
+        Actors.addAll(newActors);
         view.showStatus(step, field);    }
 
 
@@ -147,7 +147,7 @@ public class Simulator {
      */
     public void reset() {
         step = 0;
-        animals.clear();
+        Actors.clear();
         populate();
 
         // Show the starting state in the view.
@@ -164,13 +164,13 @@ public class Simulator {
             for (int col = 0; col < field.getWidth(); col++) {
                 double random =  RANDOM.nextDouble();
                 double cumulativeProb = 0;
-                for (AnimalType animalType : AnimalType.values()) {
-                    cumulativeProb += animalType.getProb();
+                for (ActorType actorType : ActorType.values()) {
+                    cumulativeProb += actorType.getProb();
                     if (random <= cumulativeProb){
                         Location location = new Location(row, col);
-                        Animal animal = AnimalFatory.createAnimal(animalType, true, field, location);
-                        animals.add(animal);
-//                        System.out.println(animalType.toString());
+                        Actor actor = ActorFactory.createActor(actorType, true, field, location);
+                        Actors.add(actor);
+//                        System.out.println(actorType.toString());
 //                        System.out.println(location.toString());
                         break;
                     }
