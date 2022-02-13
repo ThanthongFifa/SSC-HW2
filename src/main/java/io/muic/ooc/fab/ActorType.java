@@ -7,7 +7,7 @@ public enum ActorType {
     RABBIT(Rabbit.class, Color.ORANGE, 0.08),
     FOX(Fox.class, Color.BLUE, 0.02),
     TIGER(Tiger.class, Color.RED, 0.01),
-    HUNTER(Hunter.class, Color.MAGENTA, 0.001);
+    HUNTER(Hunter.class, Color.GREEN, 0.001);
 
     private Class<? extends Actor> actorClass;
 

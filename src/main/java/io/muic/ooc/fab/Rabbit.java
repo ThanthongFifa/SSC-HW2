@@ -17,7 +17,13 @@ public class Rabbit extends Animal {
     // A shared random number generator to control breeding.
     private static final Random RANDOM = new Random();
 
+    private static final int saturationValue = 9;
+
     // Individual characteristics (instance fields).
+
+    public int getSaturationValue(){
+        return saturationValue;
+    }
 
 
     /**

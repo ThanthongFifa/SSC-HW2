@@ -1,6 +1,9 @@
 package io.muic.ooc.fab;
 
 
+import io.muic.ooc.fab.observer.Observer;
+import io.muic.ooc.fab.observer.SimulationObserver;
+import io.muic.ooc.fab.observer.Subject;
 import io.muic.ooc.fab.view.SimulatorView;
 
 import java.awt.event.WindowEvent;
@@ -10,7 +13,7 @@ import java.util.List;
 import java.util.ArrayList;
 import java.util.Iterator;
 
-public class Simulator {
+public class Simulator extends Subject {
 
     // Constants representing configuration information for the simulation.
     // The default width for the grid.
@@ -54,7 +57,7 @@ public class Simulator {
             width = DEFAULT_WIDTH;
         }
 
-        Actors = new ArrayList<Actor>();
+        Actors = new ArrayList<>();
         field = new Field(depth, width);
 
         // Create a view of the state of each location in the field.
@@ -93,6 +96,9 @@ public class Simulator {
             public void windowDeactivated(WindowEvent e) {
             }
         });
+
+        Observer tempObserver = new SimulationObserver(view);
+        attach(tempObserver);
 
         // Setup a valid starting point.
         reset();
@@ -139,7 +145,9 @@ public class Simulator {
 
         // Add the newly born foxes and rabbits to the main lists.
         Actors.addAll(newActors);
-        view.showStatus(step, field);    }
+        //view.showStatus(step, field);
+        notifyAllObservers(step, field);
+    }
 
 
     /**
@@ -151,7 +159,8 @@ public class Simulator {
         populate();
 
         // Show the starting state in the view.
-        view.showStatus(step, field);
+        //view.showStatus(step, field);
+        notifyAllObservers(step, field);
     }
 
     /**

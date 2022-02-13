@@ -1,6 +1,5 @@
 package io.muic.ooc.fab;
 
-import java.util.List;
 import java.util.Random;
 
 public abstract class Animal extends Actor {
@@ -9,7 +8,7 @@ public abstract class Animal extends Actor {
 
     private int age = 0;
 
-
+    private int saturationValue;
 
     protected abstract int getBreedingAge();{}
 
@@ -17,11 +16,13 @@ public abstract class Animal extends Actor {
         super(randomAge, field, location);
     }
 
-
     public int getAge() {
         return age;
     }
 
+    public int getSaturationValue() {
+        return saturationValue;
+    }
 
     /**
      * Increase the age. This could result in the animal's death.
@@ -42,7 +43,6 @@ public abstract class Animal extends Actor {
         return getAge() >= getBreedingAge();
     }
 
-
     /**
      * Generate a number representing the number of births, if it can breed.
      *
@@ -60,4 +60,4 @@ public abstract class Animal extends Actor {
 
     protected abstract double getBreedingProb();
 
-    }
+}

@@ -4,7 +4,7 @@ import java.util.Iterator;
 import java.util.List;
 
 public class Hunter extends Actor{
-    private static final int MAX_AGE = 999999;
+    private static final int MAX_AGE = Integer.MAX_VALUE;
 
     public Hunter( boolean randomAge,Field field, Location location) {
         super(randomAge, field, location);
